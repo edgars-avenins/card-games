@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate-react-webpack",
+  "name": "Card-games",
   "version": "0.2.2",
   "description": "A webpack React starter",
   "repository": "https://github.com/dev-academy-challenges/boilerplate-react-webpack.git",
@@ -7,9 +7,9 @@
   "author": "EDA",
   "license": "ISC",
   "scripts": {
-    "client": "webpack-dev-server --hot --inline",
-    "dev": "node server & webpack --watch",
-    "server": "node server",
+    "client": "webpack --watch",
+    "dev": "run-p client server",
+    "server": "nodemon server",
     "start": "webpack && node server",
     "test": "jest --watchAll"
   },
@@ -29,10 +29,6 @@
     ]
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "superagent": "^5.0.2"
-  },
-  "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
@@ -41,13 +37,38 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.12.1",
-    "jest": "^24.7.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "firebase": "^7.14.2",
+    "nodemon": "^1.19.4",
+    "npm-run-all": "^4.1.5",
+    "path": "^0.12.7",
+    "random-username-generator": "^1.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hook-form": "^5.6.2",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "superagent": "^5.0.2",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "jest": "^24.7.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
