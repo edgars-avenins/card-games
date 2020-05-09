@@ -7,12 +7,20 @@ let socket = io(':3000')
 const App = () => {
   const [ messages, setMessages ] = useState(['More messages following!'])
 
-  const { register, handleSubmit } = useForm()
-  const onNameSubmit = data => socket.emit('user name', data)
-  const onSubmit = data => socket.emit('chat message', data)
-
+  const { register, handleSubmit, reset } = useForm()
+  const onNameSubmit = data => {
+    socket.emit('user name', data)
+    reset({name: ''})
+  }
+  const onSubmit = data => {
+    socket.emit('chat message', data)
+    setMessages([...messages, {my: true, message: data.message}])
+    reset({message: ''})
+  }
+  
   socket.once('chat message', (message) => setMessages([...messages, message]))
-
+  
+  console.log(messages)
   return (
     <div>
       <h1>Tinkering with sockets has begun!</h1>
@@ -23,7 +31,10 @@ const App = () => {
       <div id='chatbox'>
       {
           messages.map((message,i) => (
-            <div key={i}>{message}</div>
+            message.my ? 
+              <div key={i} id='myMsg'>{message.message}</div>
+            :
+              <div key={i}>{message}</div>
           ))
         }
       </div>
