@@ -10,8 +10,9 @@
     "client": "webpack --watch",
     "dev": "run-p client server",
     "server": "nodemon server",
-    "start": "webpack && node server",
-    "test": "jest --watchAll"
+    "start": "node server",
+    "test": "jest --watchAll",
+    "build": "webpack"
   },
   "babel": {
     "presets": [
