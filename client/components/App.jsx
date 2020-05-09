@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import io from 'socket.io-client'
 
-let socket = io(':3000')
+let socket = io(':3000' || process.env.PORT)
 
 const App = () => {
   const [ messages, setMessages ] = useState([])

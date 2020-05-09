@@ -25,9 +25,9 @@ io.on('connection', socket => {
 
 //if I want to use this exact io somewhere else I have to pass it as function arg(remember simons timer issue) https://github.com/piwakawaka-2020/SpacePants-backEnd/blob/dev/server/index.js
 
+const port = process.env.PORT || 3000
 
-
-http.listen(3000, function () {
+http.listen(port, function () {
   // eslint-disable-next-line no-console
-  console.log('Listening on port 3000')
+  console.log('Listening on port', port)
 })
