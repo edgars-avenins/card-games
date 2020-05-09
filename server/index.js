@@ -10,11 +10,12 @@ io.on('connection', socket => {
   socket.on('user name', name => {
     console.log(name)
     names[socket.id] = name.name
+    socket.broadcast.emit('joined', names[socket.id])
   })
 
   socket.on('chat message', message => {
     console.log('message: ' + message.message)
-    socket.broadcast.emit('chat message', names[socket.id] + ' says: ' + message.message)
+    socket.broadcast.emit('chat message', { name:names[socket.id], message: message.message})
   })
 
   socket.on('disconnect', () => {
