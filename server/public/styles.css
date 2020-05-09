@@ -1,6 +1,14 @@
 #chatbox {
-    width: 100vw;
+    width: 20vw;
     height: 80vh;
     border: 2px solid grey;
-    
+}
+
+#chatbox div {
+    border-bottom: 1px dotted cadetblue;
+}
+
+#myMsg {
+    color: brown;
+    text-align: end;
 }
