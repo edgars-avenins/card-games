@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 let socket = io(':3000')
 
 const App = () => {
-  const [ messages, setMessages ] = useState(['More messages following!'])
+  const [ messages, setMessages ] = useState([])
 
   const { register, handleSubmit, reset } = useForm()
   const onNameSubmit = data => {
@@ -19,6 +19,7 @@ const App = () => {
   }
   
   socket.once('chat message', (message) => setMessages([...messages, message]))
+  socket.once('joined', name => setMessages([...messages, name]))
   
   console.log(messages)
   return (
@@ -31,11 +32,15 @@ const App = () => {
       <div id='chatbox'>
       {
           messages.map((message,i) => (
+            //remake this into a function as there might be several types of messages coming into this chatbox
             message.my ? 
               <div key={i} id='myMsg'>{message.message}</div>
             :
-              <div key={i}>{message}</div>
-          ))
+              message.message ? 
+                <div key={i}><span id='name'>{message.name}</span> says: <span id='message'>{message.message}</span></div>
+              :
+                <div>{message} has joined the chat</div>
+            ))
         }
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
