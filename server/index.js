@@ -14,7 +14,7 @@ io.on('connection', socket => {
 
   socket.on('chat message', message => {
     console.log('message: ' + message.message)
-    socket.broadcast.emit('chat message', message.message)
+    socket.broadcast.emit('chat message', names[socket.id] + ' says: ' + message.message)
   })
 
   socket.on('disconnect', () => {
@@ -22,7 +22,7 @@ io.on('connection', socket => {
   })
 })
 
-//if I want to use this exact io somewhere else I have to pass it as function arg(remember simons timer issue)
+//if I want to use this exact io somewhere else I have to pass it as function arg(remember simons timer issue) https://github.com/piwakawaka-2020/SpacePants-backEnd/blob/dev/server/index.js
 
 const port = process.env.PORT || 3000
 
