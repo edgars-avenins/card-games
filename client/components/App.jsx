@@ -7,6 +7,7 @@ let socket = io(':3000')
 
 const App = () => {
   const [ messages, setMessages ] = useState([])
+  const [ cards, setCards ] = useState()
 
   const { register, handleSubmit, reset } = useForm()
   const onNameSubmit = data => {
@@ -21,6 +22,7 @@ const App = () => {
   
   socket.once('chat message', (message) => setMessages([...messages, message]))
   socket.once('joined', name => setMessages([...messages, name]))
+  socket.once('get cards', cardData => setCards(cardData))
   
   console.log(messages)
   return (
@@ -48,6 +50,7 @@ const App = () => {
         <input type="text" name='message' ref={register} />
         <input type="submit"/>
       </form>
+      <button onClick={()=> socket.emit('get cards')}>Get Cards</button>
     </div>
   )
 }
