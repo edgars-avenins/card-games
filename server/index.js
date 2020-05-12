@@ -1,7 +1,9 @@
 const app = require('./server')
 const db = require('../models')
+const cards = require('./logic/logic')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+
 
 //check db connection
 db.sequelize.authenticate()
@@ -16,6 +18,9 @@ let names = {}
 
 io.on('connection', socket => {
   console.log('User connected')
+  console.log(names)
+
+  const data = cards.prepareTheDeck(4)
 
   socket.on('user name', name => {
     console.log(name)
@@ -26,6 +31,12 @@ io.on('connection', socket => {
   socket.on('chat message', message => {
     console.log('message: ' + message.message)
     socket.broadcast.emit('chat message', { name:names[socket.id], message: message.message})
+  })
+
+  socket.on('get cards', () => {
+    console.log('Card request')
+    Object.keys(names).map((item, i) => io.to(item).emit('get cards', data[i])
+    )
   })
 
   socket.on('disconnect', () => {
