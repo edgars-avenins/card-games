@@ -1,6 +1,16 @@
 const app = require('./server')
+const db = require('../models')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+
+//check db connection
+db.sequelize.authenticate()
+  .then(() => {
+    console.log('Success!!')
+  })
+  .catch(err => {
+    console.error('Failure!!', err)
+  })
 
 let names = {}
 
