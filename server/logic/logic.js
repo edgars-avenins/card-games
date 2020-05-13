@@ -10,10 +10,19 @@ function generateTwoCardDecks(){
     let TwoDecksArr = []
     for (let i = 0; i < cardSuits.length; i++) {
         for (let j = 0; j < cardValues.length; j++) {
-            TwoDecksArr.push({[cardSuits[i]]: cardValues[j]})
-            TwoDecksArr.push({[cardSuits[i]]: cardValues[j]})
+            TwoDecksArr.push({
+                suit: cardSuits[i],
+                value: cardValues[j]
+            })
+            TwoDecksArr.push({
+                suit: cardSuits[i],
+                value: cardValues[j]
+            })
         }
-        TwoDecksArr.push({[cardSuits[i]]: 'Joker'})
+        TwoDecksArr.push({
+            suit: cardSuits[i],
+            value: 'Joker'
+        })
     }
     return TwoDecksArr
 }
@@ -36,22 +45,24 @@ function shuffleTheDeck(deck){
 function prepareTheDeck(count){
     let deck = shuffleTheDeck(generateTwoCardDecks())
     
-    let finishedDeck = []
+    let finishedDeck = {}
     for (let j = 0; j < count; j++) {
-        finishedDeck.push({
-            [`player${j+1}`]:[]
-        })
+        // finishedDeck.push({
+        //     [`player${j+1}`]:[]
+        // })
+        finishedDeck[`player${j+1}`] = []
 
         for (let i = 0; i < 12; i++) {
             let id = Math.floor(Math.random() * deck.length)
-            finishedDeck[j][`player${j+1}`].push(deck[id])
+            finishedDeck[`player${j+1}`].push(deck[id])
             deck.splice(id,1)
         }
     }
 
-    finishedDeck.push({
-        deck: deck
-    })
+    // finishedDeck.push({
+    //     deck: deck
+    // })
+    finishedDeck.deck = deck
 
     return finishedDeck
 }
