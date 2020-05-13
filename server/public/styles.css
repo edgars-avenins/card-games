@@ -20,3 +20,7 @@
 #message {
     font-style: italic;
 }
+
+.Dflex {
+    display: flex;
+}
