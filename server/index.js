@@ -35,8 +35,10 @@ io.on('connection', socket => {
 
   socket.on('get cards', () => {
     console.log('Card request')
-    Object.keys(names).map((item, i) => io.to(item).emit('get cards', data[i])
-    )
+    let keys = Object.keys(data)
+    Object.keys(names).map((item, i) => {
+      return io.to(item).emit('get cards', data[keys[i]])
+    })
   })
 
   socket.on('disconnect', () => {
