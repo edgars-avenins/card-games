@@ -24,27 +24,45 @@ const App = () => {
   socket.once('joined', name => setMessages([...messages, name]))
   socket.once('get cards', cardData => setCards(cardData))
   
-  console.log(messages)
+  
+  console.log(cards)
   return (
     <div>
-      <h1>Tinkering with sockets has begun!</h1>
+      <h1>Laiks uzspelet Jokeru!</h1>
       <form onSubmit={handleSubmit(onNameSubmit)}>
         <input type="text" name='name' ref={register} />
         <input type="submit"/>
       </form>
-      <div id='chatbox'>
-      {
-          messages.map((message,i) => (
-            //remake this into a function as there might be several types of messages coming into this chatbox
-            message.my ? 
-              <div key={i} id='myMsg'>{message.message}</div>
-            :
-              message.message ? 
-                <div key={i}><span id='name'>{message.name}</span> says: <span id='message'>{message.message}</span></div>
+      <div className='Dflex'>
+        <div id='chatbox'>
+        {
+            messages.map((message,i) => (
+              //remake this into a function as there might be several types of messages coming into this chatbox
+              message.my ? 
+                <div key={i} id='myMsg'>{message.message}</div>
               :
-                <div>{message} has joined the chat</div>
-            ))
-        }
+                message.message ? 
+                  <div key={i}><span id='name'>{message.name}</span> says: <span id='message'>{message.message}</span></div>
+                :
+                  <div>{message} has joined the chat</div>
+              ))
+          }
+        </div>
+        <div>
+          <h3>Manas kartis</h3>
+          {
+            cards &&
+            <div>
+
+              {
+                cards.map(card =>{
+                  return <span><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>
+                })
+              }
+              </div>
+           
+          }
+        </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" name='message' ref={register} />
