@@ -55,8 +55,8 @@ const App = () => {
             <div>
 
               {
-                cards.map(card =>{
-                  return <span><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>
+                cards.map((card, i) =>{
+                  return <span key={i}><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>
                 })
               }
               </div>
