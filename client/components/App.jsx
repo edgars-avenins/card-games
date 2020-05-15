@@ -25,7 +25,6 @@ const App = () => {
   socket.once('get cards', cardData => setCards(cardData))
   
   
-  console.log(cards)
   return (
     <div>
       <h1>Laiks uzspelet Jokeru!</h1>
