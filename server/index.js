@@ -35,6 +35,7 @@ io.on('connection', socket => {
     Object.keys(names).map((item, i) => {
       return io.to(item).emit('get cards', data[keys[i]])
     })
+    socket.emit('send deck')
   })
 
   socket.on('disconnect', () => {
