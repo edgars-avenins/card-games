@@ -18,23 +18,19 @@ let names = {}
 
 io.on('connection', socket => {
   console.log('User connected')
-  console.log(names)
 
   const data = cards.prepareTheDeck(4)
 
   socket.on('user name', name => {
-    console.log(name)
     names[socket.id] = name.name
     socket.broadcast.emit('joined', names[socket.id])
   })
 
   socket.on('chat message', message => {
-    console.log('message: ' + message.message)
     socket.broadcast.emit('chat message', { name:names[socket.id], message: message.message})
   })
 
   socket.on('get cards', () => {
-    console.log('Card request')
     let keys = Object.keys(data)
     Object.keys(names).map((item, i) => {
       return io.to(item).emit('get cards', data[keys[i]])
