@@ -15,27 +15,31 @@ db.sequelize.authenticate()
   })
 
 let names = {}
-
+const data = cards.prepareTheDeck(4) // generate new one on new room creation
+const firstCard = data.deck.pop()
 io.on('connection', socket => {
   console.log('User connected')
-
-  const data = cards.prepareTheDeck(4)
 
   socket.on('user name', name => {
     names[socket.id] = name.name
     socket.broadcast.emit('joined', names[socket.id])
   })
-
+  
   socket.on('chat message', message => {
     socket.broadcast.emit('chat message', { name:names[socket.id], message: message.message})
   })
-
+  
   socket.on('get cards', () => {
     let keys = Object.keys(data)
     Object.keys(names).map((item, i) => {
-      return io.to(item).emit('get cards', data[keys[i]])
+      
+      return io.to(item).emit('get cards', {cards: data[keys[i]], deck: firstCard})
     })
-    socket.emit('send deck')
+  })
+  
+  socket.on('next card', () => {
+    console.log(data.deck)
+    io.to(socket.id).emit('next card', data.deck.pop())
   })
 
   socket.on('disconnect', () => {
