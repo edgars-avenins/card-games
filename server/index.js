@@ -38,6 +38,10 @@ io.on('connection', socket => {
       return io.to(item).emit('get cards', {cards: data[keys[i]], deck: firstCard})
     })
   })
+
+  socket.on('change deck', card => {
+    socket.broadcast.emit('change deck', card)
+  })
   
   socket.on('next card', () => {
     console.log(data.deck)

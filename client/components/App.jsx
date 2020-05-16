@@ -31,14 +31,15 @@ const App = () => {
     setDeck(deck)
     setCards(cards)
   })
-  socket.once('next card', deck => setDeck(deck))
+  socket.on('next card', deck => setDeck(deck))
+  socket.on('change deck', deck => setDeck(deck))
 
   if(take && drop){
     let newCards = [...cards]
     newCards.splice(cards.indexOf(drop), 1, take)
     setCards(newCards)
     setDeck(drop)
-    console.log(cards.indexOf(drop), take)
+    socket.emit('change deck', drop)
     setDrop('')
     setTake('')
   }
