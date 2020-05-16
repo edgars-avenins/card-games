@@ -8,6 +8,9 @@ let socket = io(':3000')
 const App = () => {
   const [ messages, setMessages ] = useState([])
   const [ cards, setCards ] = useState()
+  const [ deck, setDeck ] = useState()
+  const [ deckCard, setDeckCard ] = useState()
+
 
   const { register, handleSubmit, reset } = useForm()
   const onNameSubmit = data => {
@@ -22,7 +25,17 @@ const App = () => {
   
   socket.once('chat message', (message) => setMessages([...messages, message]))
   socket.once('joined', name => setMessages([...messages, name]))
-  socket.once('get cards', cardData => setCards(cardData))
+  socket.once('get cards', cardData => {
+    const {cards, deck} = cardData
+    console.log(cardData)
+    setDeck(<span><img src={`/images/cards/card-${deck.suit}-${deck.value}.png`} alt=""/></span>)
+    setCards(cards)
+  })
+  socket.once('next card', card => setDeck(<span><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>))
+
+  function nextCard(){
+    socket.emit('next card')
+  }
   
   
   return (
@@ -61,6 +74,16 @@ const App = () => {
               </div>
            
           }
+          <h3>Galds</h3>
+          <div>
+            <img onClick={nextCard} src="/images/cards/card-flip.png" alt="backside of card"/>
+          </div>
+          <div>
+            {
+              deck &&
+              deck
+            }
+          </div>
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
