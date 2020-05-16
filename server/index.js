@@ -15,8 +15,8 @@ db.sequelize.authenticate()
   })
 
 let names = {}
-const data = cards.prepareTheDeck(4) // generate new one on new room creation
-const firstCard = data.deck.pop()
+let data = {} // generate new one on new room creation
+let firstCard = ''
 io.on('connection', socket => {
   console.log('User connected')
 
@@ -30,6 +30,8 @@ io.on('connection', socket => {
   })
   
   socket.on('get cards', () => {
+    data = cards.prepareTheDeck(4)
+    firstCard = data.deck.pop()
     let keys = Object.keys(data)
     Object.keys(names).map((item, i) => {
       
