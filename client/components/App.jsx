@@ -9,7 +9,8 @@ const App = () => {
   const [ messages, setMessages ] = useState([])
   const [ cards, setCards ] = useState()
   const [ deck, setDeck ] = useState()
-  const [ deckCard, setDeckCard ] = useState()
+  const [ take, setTake ] = useState()
+  const [ drop, setDrop ] = useState()
 
 
   const { register, handleSubmit, reset } = useForm()
@@ -27,11 +28,20 @@ const App = () => {
   socket.once('joined', name => setMessages([...messages, name]))
   socket.once('get cards', cardData => {
     const {cards, deck} = cardData
-    console.log(cardData)
-    setDeck(<span><img src={`/images/cards/card-${deck.suit}-${deck.value}.png`} alt=""/></span>)
+    setDeck(deck)
     setCards(cards)
   })
-  socket.once('next card', card => setDeck(<span><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>))
+  socket.once('next card', deck => setDeck(deck))
+
+  if(take && drop){
+    let newCards = [...cards]
+    newCards.splice(cards.indexOf(drop), 1, take)
+    setCards(newCards)
+    setDeck(drop)
+    console.log(cards.indexOf(drop), take)
+    setDrop('')
+    setTake('')
+  }
 
   function nextCard(){
     socket.emit('next card')
@@ -68,7 +78,7 @@ const App = () => {
 
               {
                 cards.map((card, i) =>{
-                  return <span key={i}><img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>
+                  return <span key={i}><img onClick={() => setDrop(card)} src={`/images/cards/card-${card.suit}-${card.value}.png`} alt=""/></span>
                 })
               }
               </div>
@@ -81,7 +91,7 @@ const App = () => {
           <div>
             {
               deck &&
-              deck
+              <span><img onClick={() => setTake(deck)} src={`/images/cards/card-${deck.suit}-${deck.value}.png`} alt=""/></span>
             }
           </div>
         </div>
