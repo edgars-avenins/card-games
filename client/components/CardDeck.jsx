@@ -12,11 +12,12 @@ export const CardDeck = ({socket}) => {
     
     socket.once('get cards', cardData => {
         const {cards, newDeck} = cardData
-        setDeck([...deck, newDeck])
+        console.log(newDeck)
         setCards(cards)
+        setDeck([...deck, newDeck])
       })
-    socket.on('next card', card => setCards([...cards, card]))
-    socket.on('change deck', deck => setDeck(deck))
+    socket.once('next card', card => setCards([...cards, card]))
+    socket.once('change deck', deck => setDeck(deck))
     
       // if(take && drop){
       //   let newCards = [...cards]
@@ -28,10 +29,11 @@ export const CardDeck = ({socket}) => {
       //   setTake('')
       // }
       
-      if(take){
+      if(take && cards.length == 12){
         let newHand = [...cards, take]
         let newDeck = [...deck]
-        
+
+        console.log(newHand)
         newDeck.pop()
 
         setDeck(newDeck)
@@ -39,10 +41,13 @@ export const CardDeck = ({socket}) => {
         setTake('')
       }
       
-      if(drop){
+      if(drop && cards.length == 13){
         let newHand = [...cards]
         let newDeck = [...deck, drop]
         
+        console.log(drop)
+        console.log(deck)
+        console.log(newDeck)
         newHand.splice(cards.indexOf(drop), 1)
 
         setDeck(newDeck)
@@ -56,11 +61,11 @@ export const CardDeck = ({socket}) => {
 
     return(
         <div>
-          <CardHand cards={cards} setDrop={setDrop}/>
+          <CardHand cards={[...cards]} setDrop={setDrop}/>
 
           <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
-          <CardsOld deck={deck} setTake={setTake} />
+          <CardsOld deck={[...deck]} setTake={setTake} />
         </div>
     )
 }
