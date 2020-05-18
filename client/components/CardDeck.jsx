@@ -29,7 +29,7 @@ export const CardDeck = ({socket}) => {
       //   setTake('')
       // }
       
-      if(take && cards.length == 12){
+      if(take){
         let newHand = [...cards, take]
         let newDeck = [...deck]
 
@@ -41,7 +41,7 @@ export const CardDeck = ({socket}) => {
         setTake('')
       }
       
-      if(drop && cards.length == 13){
+      if(drop){
         let newHand = [...cards]
         let newDeck = [...deck, drop]
         
@@ -55,17 +55,29 @@ export const CardDeck = ({socket}) => {
         setDrop('')
       }
 
+      function attemptDrop(card){
+        if(cards.length == 13){
+          setDrop(card)
+        }
+      }
+      function attemptTake(card){
+        if(cards.length == 12){
+          setTake(card)
+        }
+      }
+
       function nextCard(){
+          if(cards.length == 12)
           socket.emit('next card')
       }
 
     return(
         <div>
-          <CardHand cards={[...cards]} setDrop={setDrop}/>
+          <CardHand cards={[...cards]} setDrop={attemptDrop}/>
 
           <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
-          <CardsOld deck={[...deck]} setTake={setTake} />
+          <CardsOld deck={[...deck]} setTake={attemptTake} />
         </div>
     )
 }
