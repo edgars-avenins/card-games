@@ -82,4 +82,4 @@ export const CardDeck = ({socket}) => {
     )
 }
 
-//padoma par flowu, ja spied uz aizsegtas karts tad tu vinu pacel, jaspied uz atklatas, tad ari pacel... ka stradas nomesana? 
+//drag n drop lai sakartotu kartis
