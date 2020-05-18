@@ -35,7 +35,7 @@ io.on('connection', socket => {
     let keys = Object.keys(data)
     Object.keys(names).map((item, i) => {
       
-      return io.to(item).emit('get cards', {cards: data[keys[i]], deck: firstCard})
+      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard})
     })
   })
 
