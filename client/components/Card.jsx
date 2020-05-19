@@ -29,14 +29,14 @@ export const Card = ({card, setDrop, index, moveCard}) => {
             }
 
             const hoverBoundingRect = ref.current.getBoundingClientRect()
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+            const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2
             const clientOffset = monitor.getClientOffset()
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top
+            const hoverClientX = clientOffset.x - hoverBoundingRect.left
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
                 return
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
             return
             }
 
