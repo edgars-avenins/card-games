@@ -14,7 +14,6 @@ export const CardDeck = ({socket}) => {
     
     socket.once('get cards', cardData => {
         const {cards, newDeck} = cardData
-        console.log(newDeck)
         setCards(cards)
         setDeck([...deck, newDeck])
       })
@@ -35,7 +34,6 @@ export const CardDeck = ({socket}) => {
         let newHand = [...cards, take]
         let newDeck = [...deck]
 
-        console.log(newHand)
         newDeck.pop()
 
         setDeck(newDeck)
@@ -47,9 +45,6 @@ export const CardDeck = ({socket}) => {
         let newHand = [...cards]
         let newDeck = [...deck, drop]
         
-        console.log(drop)
-        console.log(deck)
-        console.log(newDeck)
         newHand.splice(cards.indexOf(drop), 1)
 
         setDeck(newDeck)
@@ -76,7 +71,7 @@ export const CardDeck = ({socket}) => {
     return(
       <div>
         <DndProvider backend={Backend}>
-          <CardHand cards={[...cards]} setDrop={attemptDrop}/>
+          <CardHand cards={[...cards]} setDrop={attemptDrop} setCards={setCards}/>
 
           <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
