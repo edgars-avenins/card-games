@@ -5,10 +5,12 @@ import Backend from 'react-dnd-html5-backend'
 import { CardHand } from './CardHand'
 import { CardsNew } from './CardsNew'
 import { CardsOld } from './CardsOld'
+import { MyCombinations } from './MyCombinations'
 
 export const CardDeck = ({socket}) => {
     const [ cards, setCards ] = useState([])
     const [ deck, setDeck ] = useState([])
+    const [ combinations, setCombinations ] = useState([])
     const [ take, setTake ] = useState()
     const [ drop, setDrop ] = useState()
     
@@ -71,8 +73,8 @@ export const CardDeck = ({socket}) => {
     return(
       <div>
         <DndProvider backend={Backend}>
-          <CardHand cards={[...cards]} setDrop={attemptDrop} setCards={setCards}/>
-
+          <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards}/>
+          <MyCombinations combinations={[...combinations]} setCards={setCombinations} cards={[...cards]}/>
           <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
           <CardsOld deck={[...deck]} setTake={attemptTake} />
