@@ -1,5 +1,7 @@
-//all cards
 import React, { useState } from 'react'
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
+
 import { CardHand } from './CardHand'
 import { CardsNew } from './CardsNew'
 import { CardsOld } from './CardsOld'
@@ -72,13 +74,15 @@ export const CardDeck = ({socket}) => {
       }
 
     return(
-        <div>
+      <div>
+        <DndProvider backend={Backend}>
           <CardHand cards={[...cards]} setDrop={attemptDrop}/>
 
           <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
           <CardsOld deck={[...deck]} setTake={attemptTake} />
-        </div>
+        </DndProvider>
+      </div>
     )
 }
 
