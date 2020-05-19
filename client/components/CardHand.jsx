@@ -4,7 +4,7 @@ import { Card } from './Card'
 import update from 'immutability-helper'
 
 
-export const CardHand = ({cards, setDrop, setCards}) => {
+export const CardHand = ({cards, combinations, setDrop, setCards}) => {
     
     const moveCard = useCallback(
         (dragIndex, hoverIndex) => {
@@ -30,8 +30,10 @@ export const CardHand = ({cards, setDrop, setCards}) => {
 
                     {
                         cards.map((card, i) => {
-                            return <Card key={i} moveCard={moveCard} card={card} index={i} setDrop={setDrop}/>
-                        })
+                            if(combinations.includes(card)){ //tad kad ievelku drop boxaa karti vajag padot indexu uz masivu un ja sis i ir taja masiva tad vinu te nerenderee
+                              return
+                            }else return <Card key={i} moveCard={moveCard} card={card} index={i} setDrop={setDrop}/>
+                          })
                     }
                 </div>
 
