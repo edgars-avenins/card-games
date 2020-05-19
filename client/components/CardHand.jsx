@@ -1,8 +1,9 @@
 //cards displayed for single user
 import React from 'react'
+import { Card } from './Card'
 
 export const CardHand = ({cards, setDrop}) => {
-
+    
     return (
         <>
             <h3>Manas kartis</h3>
@@ -12,7 +13,7 @@ export const CardHand = ({cards, setDrop}) => {
 
                     {
                         cards.map((card, i) => {
-                            return <span key={i}><img onClick={() => setDrop(card)} src={`/images/cards/card-${card.suit}-${card.value}.png`} alt="" /></span>
+                            return <Card key={i} card={card} setDrop={setDrop}/>
                         })
                     }
                 </div>
