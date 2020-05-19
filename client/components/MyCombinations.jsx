@@ -15,8 +15,7 @@ export const MyCombinations = ({ setCards, combinations }) => {
     return (
         <div>
             <h3>Manas kombinacijas</h3>
-            <div ref={drop}>
-                Drop Here
+            <div ref={drop} style={{border: '1px solid red', width: '50vw', height: '5rem'}}>
                 {
                     combinations.map((card, i) => {
                         return <span key={i}>
