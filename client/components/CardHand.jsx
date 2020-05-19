@@ -9,7 +9,6 @@ export const CardHand = ({cards, setDrop, setCards}) => {
     const moveCard = useCallback(
         (dragIndex, hoverIndex) => {
           const dragCard = cards[dragIndex]
-          console.log(dragIndex, hoverIndex)
           setCards(
             update(cards, {
               $splice: [
@@ -20,7 +19,6 @@ export const CardHand = ({cards, setDrop, setCards}) => {
           )
         },
         [cards],
-        console.log(cards)
       )
 
     return (

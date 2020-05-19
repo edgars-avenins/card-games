@@ -21,7 +21,6 @@ export const Card = ({card, setDrop, index, moveCard}) => {
             if(!ref.current){
                 return
             }
-            console.log(item)
             const dragIndex = item.index
             const hoverIndex = index
 
