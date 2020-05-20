@@ -79,9 +79,13 @@ export const CardDeck = ({ socket }) => {
   return (
     <div>
       <DndProvider backend={Backend}>
-        <CardsNew nextCard={nextCard} />
-        <CardsOld deck={[...deck]} setTake={attemptTake} />
-        <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards} />
+        <div className='Dflex'>
+
+            <CardsNew nextCard={nextCard} />
+            <CardsOld deck={[...deck]} setTake={attemptTake} />
+
+          <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards} />
+        </div>
         <MyCombinations combinations={[...combinations]} sendToAllDeck={sendToAllDeck} setCards={setCombinations} cards={[...cards]} />
         <h3>Galds</h3>
         <AllPlayerDeck cards={[...allDeck]} setAllDeck={setAllDeck} socket={socket} />
