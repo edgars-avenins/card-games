@@ -39,6 +39,12 @@ io.on('connection', socket => {
     })
   })
 
+  socket.on('all deck', cards => {
+    Object.keys(names).map(item => (
+      io.to(item).emit('all deck', cards)
+    ))
+  })
+
   socket.on('change deck', card => {
     socket.broadcast.emit('change deck', card)
   })
