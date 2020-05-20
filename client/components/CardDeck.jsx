@@ -14,25 +14,18 @@ export const CardDeck = ({ socket }) => {
   const [combinations, setCombinations] = useState([])
   const [allDeck, setAllDeck] = useState([])
   const [take, setTake] = useState()
+  const [count, setCount] = useState()
   const [drop, setDrop] = useState()
 
   socket.once('get cards', cardData => {
-    const { cards, newDeck } = cardData
+    const { cards, newDeck, cardCount } = cardData
     setCards(cards)
     setDeck([...deck, newDeck])
+    setCount(cardCount)
   })
   socket.once('next card', card => setCards([...cards, card]))
   socket.once('change deck', deck => setDeck(deck))
-
-  // if(take && drop){
-  //   let newCards = [...cards]
-  //   newCards.splice(cards.indexOf(drop), 1, take)
-  //   setCards(newCards)
-  //   setDeck(drop)
-  //   socket.emit('change deck', drop)
-  //   setDrop('')
-  //   setTake('')
-  // }
+  socket.once('new count', newCount => setCount(newCount))
 
   if (take) {
     let newHand = [...cards, take]
@@ -57,18 +50,18 @@ export const CardDeck = ({ socket }) => {
   }
 
   function attemptDrop(card) {
-    if (cards.length == 13) {
+    if (cards.length == count+1) {
       setDrop(card)
     }
   }
   function attemptTake(card) {
-    if (cards.length == 12) {
+    if (cards.length == count) {
       setTake(card)
     }
   }
 
   function nextCard() {
-    if (cards.length == 12)
+    if (cards.length == count)
       socket.emit('next card')
   }
 
