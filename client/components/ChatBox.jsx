@@ -50,7 +50,6 @@ export const ChatBox = ({ socket }) => {
                 <input type="text" name='message' ref={register} />
                 <input type="submit" />
             </form>
-            <button onClick={() => socket.emit('get cards')}>Get Cards</button>
         </div>
     )
 }
