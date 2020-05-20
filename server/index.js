@@ -5,6 +5,7 @@ const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 
 
+
 //check db connection
 db.sequelize.authenticate()
   .then(() => {
@@ -15,7 +16,9 @@ db.sequelize.authenticate()
   })
 
 let users = {}
+let userArr = []
 let data = {} // generate new one on new room creation
+let turn = 0
 let firstCard = ''
 io.on('connection', socket => {
   console.log('User connected')
@@ -35,11 +38,12 @@ io.on('connection', socket => {
   
   socket.on('get cards', () => {
     data = cards.prepareTheDeck(Object.keys(users).length)
+    userArr = Object.keys(users)
     firstCard = data.deck.pop()
     let keys = Object.keys(data)
     Object.keys(users).map((item, i) => {
       
-      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard, cardCount: users[item]['cards']})
+      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard, cardCount: users[item]['cards'], turn: i==turn ? true : false})
     })
   })
 
@@ -67,6 +71,14 @@ io.on('connection', socket => {
   
   socket.on('drop card', card => {
     socket.broadcast.emit('drop card', card)
+  })
+
+  socket.on('next turn', () => {
+    if(turn == userArr.length - 1) turn = 0
+    else turn++
+    userArr.map((user, i) => (
+      io.to(user).emit('next turn', turn == i ? true : false)
+    ))
   })
 
   socket.on('disconnect', () => {
