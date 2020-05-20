@@ -14,35 +14,45 @@ db.sequelize.authenticate()
     console.error('Failure!!', err)
   })
 
-let names = {}
+let users = {}
 let data = {} // generate new one on new room creation
 let firstCard = ''
 io.on('connection', socket => {
   console.log('User connected')
 
-  socket.on('user name', name => {
-    names[socket.id] = name.name
-    socket.broadcast.emit('joined', names[socket.id])
+  socket.on('user name', user => {
+    console.log(users)
+    users[socket.id] = {}
+    console.log(users)
+    users[socket.id]['cards'] = 12
+    users[socket.id]['name'] = user.name
+    console.log(users)
+    socket.broadcast.emit('joined', users[socket.id].name)
   })
   
   socket.on('chat message', message => {
-    socket.broadcast.emit('chat message', { name:names[socket.id], message: message.message})
+    socket.broadcast.emit('chat message', { name:users[socket.id].name, message: message.message})
   })
   
   socket.on('get cards', () => {
     data = cards.prepareTheDeck(4)
     firstCard = data.deck.pop()
     let keys = Object.keys(data)
-    Object.keys(names).map((item, i) => {
+    Object.keys(users).map((item, i) => {
       
-      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard})
+      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard, cardCount: users[item]['cards']})
     })
   })
 
   socket.on('all deck', cards => {
-    Object.keys(names).map(item => (
-      io.to(item).emit('all deck', cards)
-    ))
+    users[socket.id]['cards'] -= cards.length
+    console.log(users)
+    Object.keys(users).map(item => {
+      if(item == socket.id){
+        io.to(socket.id).emit('new count', users[socket.id]['cards'])
+      }
+        io.to(item).emit('all deck', cards)
+    })
   })
 
   socket.on('change deck', card => {
