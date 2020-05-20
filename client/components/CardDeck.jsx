@@ -31,6 +31,8 @@ export const CardDeck = ({ socket }) => {
     newDeck.pop()
     setDeck(newDeck)
   })
+  socket.once('drop card', card => setDeck([...deck, card]))
+
 
   if(count == 0){
     alert('TU UZVAREJI!!!')
@@ -53,6 +55,7 @@ export const CardDeck = ({ socket }) => {
     let newDeck = [...deck, drop]
 
     newHand.splice(cards.indexOf(drop), 1)
+    socket.emit('drop card', drop)
 
     setDeck(newDeck)
     setCards(newHand)

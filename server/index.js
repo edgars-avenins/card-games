@@ -65,6 +65,10 @@ io.on('connection', socket => {
     socket.broadcast.emit('picked card')
   })
   
+  socket.on('drop card', card => {
+    socket.broadcast.emit('drop card', card)
+  })
+
   socket.on('disconnect', () => {
     delete users[socket.id]
     console.log(users)
