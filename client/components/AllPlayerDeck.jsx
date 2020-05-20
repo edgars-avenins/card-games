@@ -9,10 +9,7 @@ export const AllPlayerDeck = ({ cards, setAllDeck, socket }) => {
         setAllDeck(cards)
     }
 
-    socket.once('all deck', data => {
-        console.log(data)
-        setDeck([...deck, data])
-    })
+    socket.once('all deck', data => setDeck([...deck, data]))
 
     return (
         <>
