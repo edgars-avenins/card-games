@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form'
 
 export const ChatBox = ({ socket }) => {
     const [messages, setMessages] = useState([])
+    const [name, setName] = useState()
 
 
 
     const { register, handleSubmit, reset } = useForm()
     const onNameSubmit = data => {
         socket.emit('user name', data)
+        setName(data.name)
         reset({ name: '' })
     }
     const onSubmit = data => {
@@ -23,10 +25,13 @@ export const ChatBox = ({ socket }) => {
 
     return (
         <div>
+            {
+                !name &&
             <form onSubmit={handleSubmit(onNameSubmit)}>
                 <input type="text" name='name' ref={register} />
                 <input type="submit" />
             </form>
+            }
             <div id='chatbox'>
                 {
                     messages.map((message, i) => (
