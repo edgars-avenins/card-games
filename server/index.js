@@ -21,11 +21,10 @@ io.on('connection', socket => {
   console.log('User connected')
 
   socket.on('user name', user => {
-    console.log(users)
     users[socket.id] = {}
-    console.log(users)
     users[socket.id]['cards'] = 12
     users[socket.id]['name'] = user.name
+
     console.log(users)
     socket.broadcast.emit('joined', users[socket.id].name)
   })
@@ -46,25 +45,25 @@ io.on('connection', socket => {
 
   socket.on('all deck', cards => {
     users[socket.id]['cards'] -= cards.length
-    console.log(users)
     Object.keys(users).map(item => {
       if(item == socket.id){
         io.to(socket.id).emit('new count', users[socket.id]['cards'])
       }
-        io.to(item).emit('all deck', cards)
+      io.to(item).emit('all deck', cards)
     })
   })
-
+  
   socket.on('change deck', card => {
     socket.broadcast.emit('change deck', card)
   })
   
   socket.on('next card', () => {
-    console.log(data.deck)
     io.to(socket.id).emit('next card', data.deck.pop())
   })
-
+  
   socket.on('disconnect', () => {
+    delete users[socket.id]
+    console.log(users)
     console.log('User disconnected')
   })
 })
