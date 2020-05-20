@@ -35,7 +35,7 @@ io.on('connection', socket => {
   })
   
   socket.on('get cards', () => {
-    data = cards.prepareTheDeck(4)
+    data = cards.prepareTheDeck(Object.keys(users).length)
     firstCard = data.deck.pop()
     let keys = Object.keys(data)
     Object.keys(users).map((item, i) => {
