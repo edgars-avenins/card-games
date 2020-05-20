@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 import { ItemTypes, altCards } from '../utils'
 
 
-export const MyCombinations = ({ setCards, combinations, setAllDeck }) => {
+export const MyCombinations = ({ setCards, combinations, sendToAllDeck }) => {
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop(item, monitor) {
@@ -24,7 +24,7 @@ export const MyCombinations = ({ setCards, combinations, setAllDeck }) => {
                     })
                 }
             </div>
-            <button onClick={() => setAllDeck(combinations)}>LAY EM OUT</button>
+            <button onClick={() => sendToAllDeck(combinations)}>LAY EM OUT</button>
         </div>
     )
 }
