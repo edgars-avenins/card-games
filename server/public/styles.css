@@ -21,6 +21,13 @@
     font-style: italic;
 }
 
+#start {
+    height: fit-content;
+    align-self: center;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
 .Dflex {
     display: flex;
 }
