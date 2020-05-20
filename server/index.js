@@ -60,6 +60,10 @@ io.on('connection', socket => {
   socket.on('next card', () => {
     io.to(socket.id).emit('next card', data.deck.pop())
   })
+
+  socket.on('picked card', () => {
+    socket.broadcast.emit('picked card')
+  })
   
   socket.on('disconnect', () => {
     delete users[socket.id]
