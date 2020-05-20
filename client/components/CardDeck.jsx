@@ -6,11 +6,13 @@ import { CardHand } from './CardHand'
 import { CardsNew } from './CardsNew'
 import { CardsOld } from './CardsOld'
 import { MyCombinations } from './MyCombinations'
+import { AllPlayerDeck } from './AllPlayerDeck'
 
 export const CardDeck = ({socket}) => {
     const [ cards, setCards ] = useState([])
     const [ deck, setDeck ] = useState([])
     const [ combinations, setCombinations ] = useState([])
+    const [ allDeck, setAllDeck] = useState([])
     const [ take, setTake ] = useState()
     const [ drop, setDrop ] = useState()
     
@@ -73,11 +75,12 @@ export const CardDeck = ({socket}) => {
     return(
       <div>
         <DndProvider backend={Backend}>
-          <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards}/>
-          <MyCombinations combinations={[...combinations]} setCards={setCombinations} cards={[...cards]}/>
-          <h3>Galds</h3>
           <CardsNew nextCard={nextCard} />
           <CardsOld deck={[...deck]} setTake={attemptTake} />
+          <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards}/>
+          <MyCombinations combinations={[...combinations]} setAllDeck={setAllDeck} setCards={setCombinations} cards={[...cards]}/>
+          <h3>Galds</h3>
+          <AllPlayerDeck cards={[...allDeck]} setAllDeck={setAllDeck} socket={socket}/>
         </DndProvider>
       </div>
     )
