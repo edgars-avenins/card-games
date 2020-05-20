@@ -16,12 +16,14 @@ export const CardDeck = ({ socket }) => {
   const [take, setTake] = useState()
   const [count, setCount] = useState()
   const [drop, setDrop] = useState()
+  const [myTurn, setMyTurn] = useState(false)
 
   socket.once('get cards', cardData => {
-    const { cards, newDeck, cardCount } = cardData
+    const { cards, newDeck, cardCount, turn } = cardData
     setCards(cards)
     setDeck([...deck, newDeck])
     setCount(cardCount)
+    setMyTurn(turn)
   })
   socket.once('next card', card => setCards([...cards, card]))
   socket.once('change deck', deck => setDeck(deck))
@@ -32,6 +34,7 @@ export const CardDeck = ({ socket }) => {
     setDeck(newDeck)
   })
   socket.once('drop card', card => setDeck([...deck, card]))
+  socket.once('next turn', turn => setMyTurn(turn))
 
 
   if(count == 0){
@@ -65,16 +68,17 @@ export const CardDeck = ({ socket }) => {
   function attemptDrop(card) {
     if (cards.length == count+1) {
       setDrop(card)
+      socket.emit('next turn')
     }
   }
   function attemptTake(card) {
-    if (cards.length == count) {
+    if (cards.length == count && myTurn) {
       setTake(card)
     }
   }
 
   function nextCard() {
-    if (cards.length == count)
+    if (cards.length == count && myTurn)
       socket.emit('next card')
   }
 
