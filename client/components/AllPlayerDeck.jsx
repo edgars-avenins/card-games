@@ -15,12 +15,17 @@ export const AllPlayerDeck = ({ cards, setAllDeck, socket }) => {
         <>
             <h3>All player combinations</h3>
             {
-                deck.map(combination => (
-                    combination.map((card, i) => {
-                        return <span key={i}>
-                            <img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt={altCards.value[card.value] + ' of ' + altCards.suit[card.suit]} />
-                        </span>
-                    })
+                deck.map((combination, i) => (
+                    <div key={i+100}>
+                        {
+                            combination.map((card, i) => {
+                                return <span key={i}>
+                                    <img src={`/images/cards/card-${card.suit}-${card.value}.png`} alt={altCards.value[card.value] + ' of ' + altCards.suit[card.suit]} />
+                                </span>
+                            })
+
+                        }
+                    </div>
                 ))
             }
         </>
