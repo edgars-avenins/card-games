@@ -27,6 +27,10 @@ export const CardDeck = ({ socket }) => {
   socket.once('change deck', deck => setDeck(deck))
   socket.once('new count', newCount => setCount(newCount))
 
+  if(count == 0){
+    alert('TU UZVAREJI!!!')
+  }
+
   if (take) {
     let newHand = [...cards, take]
     let newDeck = [...deck]
