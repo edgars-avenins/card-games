@@ -7,16 +7,17 @@ import { ChatBox } from './ChatBox'
 let socket = io(':3000')
 
 const App = () => {
- 
+
 
   return (
-    <div className='Dflex'>
+    <>
       <h1>Laiks uzspelet Jokeru!</h1>
-      <ChatBox socket={socket} />
-
-      <CardDeck socket={socket} />
-    </div>
-
+      <div className='Dflex'>
+        <ChatBox socket={socket} />
+        <button id='start' onClick={() => socket.emit('get cards')}>START</button>
+        <CardDeck socket={socket} />
+      </div>
+    </>
   )
 }
 
