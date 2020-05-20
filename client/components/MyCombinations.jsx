@@ -24,7 +24,7 @@ export const MyCombinations = ({ setCards, combinations, sendToAllDeck }) => {
                     })
                 }
             </div>
-            <button onClick={() => sendToAllDeck(combinations)}>LAY EM OUT</button>
+            <button onClick={() => sendToAllDeck(combinations)}>IZLIKTIES</button>
         </div>
     )
 }
