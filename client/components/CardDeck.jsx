@@ -19,7 +19,7 @@ export const CardDeck = ({ socket }) => {
   const [myTurn, setMyTurn] = useState(false)
   
   useEffect(() => {
-    console.log(socket._callbacks)
+    // console.log(socket._callbacks)
     
     socket.once('get cards', cardData => {
       const { cards, newDeck, cardCount, turn } = cardData
