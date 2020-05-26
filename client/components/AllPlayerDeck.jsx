@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { altCards } from '../utils'
 
 export const AllPlayerDeck = ({ cards, setAllDeck, socket }) => {
@@ -9,7 +9,13 @@ export const AllPlayerDeck = ({ cards, setAllDeck, socket }) => {
         setAllDeck(cards)
     }
 
-    socket.once('all deck', data => setDeck([...deck, data]))
+    useEffect(() => {
+        socket.once('all deck', data => {
+            console.log('shouldn\'t be here!!')
+            
+            setDeck([...deck, data])
+        })
+    },[cards, deck])
 
     return (
         <>
