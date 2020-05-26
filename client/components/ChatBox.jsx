@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 export const ChatBox = ({ socket }) => {
     const [messages, setMessages] = useState([])
     const [name, setName] = useState()
 
+    useEffect(() => {
+
+        socket.once('chat message', (message) => setMessages([...messages, message]))
+        socket.once('joined', name => setMessages([...messages, name]))
+    }, [messages, name])
 
 
     const { register, handleSubmit, reset } = useForm()
@@ -19,8 +24,7 @@ export const ChatBox = ({ socket }) => {
         reset({ message: '' })
     }
 
-    socket.once('chat message', (message) => setMessages([...messages, message]))
-    socket.once('joined', name => setMessages([...messages, name]))
+    
 
 
     return (

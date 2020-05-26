@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DndProvider } from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
 
@@ -17,27 +17,31 @@ export const CardDeck = ({ socket }) => {
   const [count, setCount] = useState()
   const [drop, setDrop] = useState()
   const [myTurn, setMyTurn] = useState(false)
-
-  socket.once('get cards', cardData => {
-    const { cards, newDeck, cardCount, turn } = cardData
-    setCards(cards)
-    setDeck([...deck, newDeck])
-    setCount(cardCount)
-    setMyTurn(turn)
-  })
-  socket.once('next card', card => setCards([...cards, card]))
-  socket.once('change deck', deck => setDeck(deck))
-  socket.once('new count', newCount => setCount(newCount))
-  socket.once('picked card', () => {
-    let newDeck = [...deck]
-    newDeck.pop()
-    setDeck(newDeck)
-  })
-  socket.once('drop card', card => setDeck([...deck, card]))
-  socket.once('next turn', turn => setMyTurn(turn))
-
-
-  if(count == 0){
+  
+  useEffect(() => {
+    console.log(socket._callbacks)
+    
+    socket.once('get cards', cardData => {
+      const { cards, newDeck, cardCount, turn } = cardData
+      setCards(cards)
+      setDeck([...deck, newDeck])
+      setCount(cardCount)
+      setMyTurn(turn)
+    })
+    socket.once('next card', card => setCards([...cards, card]))
+    socket.once('change deck', deck => setDeck(deck))
+    socket.once('new count', newCount => setCount(newCount))
+    socket.once('picked card', () => {
+      let newDeck = [...deck]
+      newDeck.pop()
+      setDeck(newDeck)
+    })
+    socket.once('drop card', card => setDeck([...deck, card]))
+    socket.once('next turn', turn => setMyTurn(turn))
+    
+  }, [deck, cards, combinations, allDeck, take, count, drop, myTurn])
+    
+    if(count == 0){
     alert('TU UZVAREJI!!!')
   }
 
@@ -78,8 +82,9 @@ export const CardDeck = ({ socket }) => {
   }
 
   function nextCard() {
-    if (cards.length == count && myTurn)
-      socket.emit('next card')
+    if (cards.length == count && myTurn){
+        socket.emit('next card')
+    }
   }
 
   function sendToAllDeck(combo) {
