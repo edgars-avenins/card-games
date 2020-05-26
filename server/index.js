@@ -43,7 +43,7 @@ io.on('connection', socket => {
     let keys = Object.keys(data)
     Object.keys(users).map((item, i) => {
       
-      return io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard, cardCount: users[item]['cards'], turn: i==turn ? true : false})
+      io.to(item).emit('get cards', {cards: data[keys[i]], newDeck: firstCard, cardCount: users[item]['cards'], turn: i==turn ? true : false})
     })
   })
 
@@ -62,7 +62,9 @@ io.on('connection', socket => {
   })
   
   socket.on('next card', () => {
-    io.to(socket.id).emit('next card', data.deck.pop())
+
+    let nextCard = data.deck.pop()
+    socket.emit('next card', nextCard)
   })
 
   socket.on('picked card', () => {
