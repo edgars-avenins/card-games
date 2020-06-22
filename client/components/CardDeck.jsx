@@ -20,7 +20,8 @@ export const CardDeck = ({ socket }) => {
   
   useEffect(() => {
     // console.log(socket._callbacks)
-    
+    //learn to do custom hooks
+    console.time('Start')
     socket.once('get cards', cardData => {
       const { cards, newDeck, cardCount, turn } = cardData
       setCards(cards)
@@ -38,7 +39,7 @@ export const CardDeck = ({ socket }) => {
     })
     socket.once('drop card', card => setDeck([...deck, card]))
     socket.once('next turn', turn => setMyTurn(turn))
-    
+    console.timeEnd('Start')
   }, [deck, cards, combinations, allDeck, take, count, drop, myTurn])
     
     if(count == 0){
@@ -99,14 +100,33 @@ export const CardDeck = ({ socket }) => {
       <DndProvider backend={Backend}>
         <div className='Dflex'>
 
-            <CardsNew nextCard={nextCard} />
-            <CardsOld deck={[...deck]} setTake={attemptTake} />
+            <CardsNew
+              nextCard={nextCard} 
+            />
+            <CardsOld
+              deck={[...deck]}
+              setTake={attemptTake}
+            />
 
-          <CardHand cards={[...cards]} combinations={[...combinations]} setDrop={attemptDrop} setCards={setCards} />
+          <CardHand
+            cards={[...cards]}
+            combinations={[...combinations]}
+            setDrop={attemptDrop}
+            setCards={setCards}
+          />
         </div>
-        <MyCombinations combinations={[...combinations]} sendToAllDeck={sendToAllDeck} setCards={setCombinations} cards={[...cards]} />
+        <MyCombinations
+          combinations={[...combinations]}
+          sendToAllDeck={sendToAllDeck}
+          setCards={setCombinations}
+          cards={[...cards]}
+        />
         <h3>Galds</h3>
-        <AllPlayerDeck cards={[...allDeck]} setAllDeck={setAllDeck} socket={socket} />
+        <AllPlayerDeck
+          cards={[...allDeck]}
+          setAllDeck={setAllDeck}
+          socket={socket}
+        />
       </DndProvider>
     </div>
   )
