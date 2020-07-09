@@ -23,7 +23,7 @@ export const CardHand = ({cards, combinations, setDrop, setCards}) => {
 
     return (
         <>
-            <h3>Manas kartis</h3>
+            <h3>My Cards</h3>
             {
                 cards &&
                 <div>

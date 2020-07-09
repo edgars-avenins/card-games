@@ -121,7 +121,7 @@ export const CardDeck = ({ socket }) => {
           setCards={setCombinations}
           cards={[...cards]}
         />
-        <h3>Galds</h3>
+        <h3>Deck</h3>
         <AllPlayerDeck
           cards={[...allDeck]}
           setAllDeck={setAllDeck}

@@ -33,7 +33,7 @@ export const ChatBox = ({ socket }) => {
                 !name &&
             <form onSubmit={handleSubmit(onNameSubmit)}>
                 <input type="text" name='name' ref={register} />
-                <input type="submit" />
+                <input type="submit" value="Join"/>
             </form>
             }
             <div id='chatbox'>
@@ -52,7 +52,7 @@ export const ChatBox = ({ socket }) => {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" name='message' ref={register} />
-                <input type="submit" />
+                <input type="submit" value="Send"/>
             </form>
         </div>
     )

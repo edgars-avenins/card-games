@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <>
-      <h1>Laiks uzspelet Jokeru!</h1>
+      <h1>Edgars Card Game</h1>
       <div className='Dflex'>
         <ChatBox socket={socket} />
         <button id='start' onClick={() => socket.emit('get cards')}>START</button>

@@ -14,7 +14,7 @@ export const MyCombinations = ({ setCards, combinations, sendToAllDeck }) => {
 
     return (
         <div>
-            <h3>Manas kombinacijas</h3>
+            <h3>My Combinations</h3>
             <div ref={drop} style={{border: '1px solid red', width: '50vw', height: '5rem'}}>
                 {
                     combinations.map((card, i) => {
@@ -24,7 +24,7 @@ export const MyCombinations = ({ setCards, combinations, sendToAllDeck }) => {
                     })
                 }
             </div>
-            <button onClick={() => sendToAllDeck(combinations)}>IZLIKTIES</button>
+            <button onClick={() => sendToAllDeck(combinations)}>Lay 'em Out</button>
         </div>
     )
 }
