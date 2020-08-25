@@ -8,6 +8,9 @@ import { CardsOld } from './CardsOld'
 import { MyCombinations } from './MyCombinations'
 import { AllPlayerDeck } from './AllPlayerDeck'
 
+let a = 0
+let b = 0
+
 export const CardDeck = ({ socket }) => {
   const [cards, setCards] = useState([])
   const [deck, setDeck] = useState([])
@@ -18,10 +21,10 @@ export const CardDeck = ({ socket }) => {
   const [drop, setDrop] = useState()
   const [myTurn, setMyTurn] = useState(false)
   
+
+  //Component did mount
   useEffect(() => {
-    // console.log(socket._callbacks)
-    //learn to do custom hooks
-    console.time('Start')
+    console.log('Component did mount')
     socket.once('get cards', cardData => {
       const { cards, newDeck, cardCount, turn } = cardData
       setCards(cards)
@@ -29,20 +32,43 @@ export const CardDeck = ({ socket }) => {
       setCount(cardCount)
       setMyTurn(turn)
     })
-    socket.once('next card', card => setCards([...cards, card]))
+
+  },[])
+
+  useEffect(() => {
+  console.clear()
+
+    a++
+    console.log('update deck',a)
+
     socket.once('change deck', deck => setDeck(deck))
-    socket.once('new count', newCount => setCount(newCount))
     socket.once('picked card', () => {
       let newDeck = [...deck]
       newDeck.pop()
       setDeck(newDeck)
     })
     socket.once('drop card', card => setDeck([...deck, card]))
-    socket.once('next turn', turn => setMyTurn(turn))
-    console.timeEnd('Start')
-  }, [deck, cards, combinations, allDeck, take, count, drop, myTurn])
+  },[deck])
+
+  useEffect(() => {
+  console.clear()
+
+    // console.log(socket._callbacks)
+    //learn to do custom hooks
+    b++
+    console.log('update hand, turn',b)
+
+    socket.once('next card', card => setCards([...cards, card]))
+    socket.once('new count', newCount => setCount(newCount))
     
-    if(count == 0){
+    socket.once('next turn', turn => setMyTurn(turn))
+
+  }, [cards, count, myTurn])
+  
+
+
+
+  if(count == 0){
     alert('TU UZVAREJI!!!')
   }
 
