@@ -18,7 +18,9 @@ const App = () => {
           id="start"
           onClick={() => {
             setStart(true);
-            socket.emit("get cards");
+            setTimeout(() => {
+              socket.emit("get cards");
+            }, 1000);
           }}
         >
           START
