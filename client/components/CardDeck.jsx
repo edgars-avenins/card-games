@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { DndProvider } from 'react-dnd'
 import Backend from 'react-dnd-html5-backend'
 
@@ -10,6 +10,43 @@ import { AllPlayerDeck } from './AllPlayerDeck'
 
 let a = 0
 let b = 0
+
+
+export default class CardDeck extends Component {
+  state = {
+    cards: [],
+    deck: [],
+    combinations: [],
+    allDeck: [],
+    take: '',
+    count: 0,
+    drop: '',
+    myTurn: false
+  }
+
+  componentDidMount(){
+    this.props.socket.once('get cards', cardData => {
+      const { cards, newDeck, cardCount, turn } = cardData
+      this.setState({
+        cards,
+        deck: [...deck, newDeck],
+        
+      })
+      setCards(cards)
+      setDeck([...deck, newDeck])
+      setCount(cardCount)
+      setMyTurn(turn)
+    })
+  }
+  render() {
+    return (
+      <div>
+        
+      </div>
+    )
+  }
+}
+
 
 export const CardDeck = ({ socket }) => {
   const [cards, setCards] = useState([])
